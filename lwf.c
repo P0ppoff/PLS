@@ -26,16 +26,16 @@ int main (int argc, char** argv) {
 	char option = 0; // équivalent à option = '\0'
 
 	if(argc != 3){
-		printf("\n\tUtilisation : ./Lwf -[c/d] fichier\n\n");
+		printf("\n\tUtilisation : ./Lwf -[c/e] fichier\n\n");
 		return 1;
 	}else{
 		option = choix(argv[1]);
 		if(option == 'c'){
 			printf("\n\tCompression\n\n");
-		}else if(option == 'd'){
-			printf("\n\tDécompression\n\n");
+		}else if(option == 'e'){
+			printf("\n\tExtraction\n\n");
 		}else{		
-			printf("\n\tUtilisation : ./Lwf -[c/d] fichier\n\n");
+			printf("\n\tUtilisation : ./Lwf -[c/e] fichier\n\n");
 			return 1;
 		}
 	}
