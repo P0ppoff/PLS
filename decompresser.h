@@ -1,0 +1,6 @@
+#ifndef _DECOMPRESSER_H_
+#define _DECOMPRESSER_H_
+
+//A FAIRE
+
+#endif // _DECOMPRESSER_H_

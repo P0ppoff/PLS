@@ -5,10 +5,17 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+typedef uint8_t element;
+
+typedef struct _sequence {
+    struct _sequence * suite;
+    element elt;
+} sequence;
 
 typedef struct _cellule {
-    struct _cellule * parent, frere, fils;
-    uint8_t element;
+    struct  _cellule *  parent, frere_suivant, frere_precedent, fils;  //????frere_precedent
+            element     elt;      //8 bits
+            int         index;    //numéro de la séquence
 } cellule;
 
 
