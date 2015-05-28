@@ -11,22 +11,21 @@ void liberer_sequence (sequence *ptr_seq){
     }
 }
 
+void liberer_cellule (cellule *ptr_cell);
 void liberer_frere (cellule *ptr_cell);
 void liberer_fils (cellule *ptr_cell);
 
 void liberer_frere (cellule *ptr_cell) {
-    cellule *courant;
-    while(ptr_cell != NULL){
-        liberer_fils(ptr_cell);
-        courant = ptr_cell;
-        ptr_cell = ptr_cell->frere_suivant;
-        free(courant);
-        courant = NULL;
-    }
+    liberer_cellule(ptr_cell->frere_suivant);
+}
+
+void liberer_fils (cellule *ptr_cell) {
+    liberer_cellule(ptr_cell->fils);
 }
 
 void liberer_cellule (cellule *ptr_cell){
-    liberer_freres(ptr_cell->frere_suivant);
+    liberer_frere(ptr_cell);
+    liberer_fils(ptr_cell);
     free(ptr_cell);
     ptr_cell = NULL;
 }

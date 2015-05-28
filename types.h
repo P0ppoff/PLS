@@ -26,7 +26,7 @@ typedef struct _dico {
 	cellule* racine;
 } dico;
 
-#endif _TYPES_H_
+#endif //_TYPES_H_
 
 
 
