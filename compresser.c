@@ -1,5 +1,6 @@
 #include "compresser.h"
 #include "types.h"
+#include "gestion_donnees.h"
 
 void compresser(FILE* f_in, FILE* f_out){
 	int TAILLE_ECRIT = 9; // on commence sur 9 pour avoir deux infos de plus : Fin de fichier & incrémentation du nombre de bits à écrire

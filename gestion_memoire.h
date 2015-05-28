@@ -1,7 +1,5 @@
 #ifndef _GESTION_MEMOIRE_H_
 #define _GESTION_MEMOIRE_H_
-#include <stdio.h>
-#include "types.h"
 
 void liberer_sequence (sequence *ptr_seq){;
 

@@ -1,4 +1,6 @@
-
+#include "types.h"
+#include <sdtlib.h>
+#include <stdio.h>
 
 FILE* ouverture_lecture(char nom_fichier[]){
 	FILE* fichier = NULL;

@@ -1,5 +1,6 @@
 #include "gestion_donnees.h"
 #include "types.h"
+#include "gestion_memoire.h"
 
 void init_compression (dico *dictionnaire){
 	int i;

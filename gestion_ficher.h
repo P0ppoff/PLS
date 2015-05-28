@@ -1,10 +1,6 @@
 #ifndef _GESTION_FICHIER_H_
 #define _GESTION_FICHIER_H_
 
-#include "types.h"
-#include <sdtlib.h>
-#include <stdio.h>
-
 FILE* ouverture_lecture(char nom_fichier[]);
 FILE* ouverture_ecriture(char nom_fichier[]);
 
