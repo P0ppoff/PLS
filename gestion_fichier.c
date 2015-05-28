@@ -1,6 +1,4 @@
-#include "types.h"
-#include <sdtlib.h>
-#include <stdio.h>
+#include "gestion_fichier.h"
 
 FILE* ouverture_lecture(char nom_fichier[]){
 	FILE* fichier = NULL;
@@ -24,8 +22,8 @@ void fermeture(FILE *fichier){
 	fclose(fichier);
 }
 
-sequence* lecture_bits(FILE fichier, int nb_bits){
-
+sequence* lecture_bits(FILE *fichier, int nb_bits){
+    return NULL;
 }
 
 int est_fin(sequence *ptr_seq){
