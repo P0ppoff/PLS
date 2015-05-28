@@ -3,30 +3,18 @@
 
 #include "types.h"
 
+FILE ouverture_lecture(char nom_fichier[]);
+FILE ouverture_ecriture(char nom_fichier[]);
 
-//Description   :
-//Parametre     :   a definir
-//Retour        :   8 bits
-element lecture_element;
+void fermeture(FILE fichier);
 
+sequence* lecture_bits(FILE fichier, int nb_bits);
 
-//Description   :
-//Parametre     :   8 bits
-//Retour        :   aucun
-void ecriture_element (element elt);
+int est_fin(sequence *ptr_seq);
 
-//Description   :
-//Parametre     :   aucun
-//Retour        :   8 bits
-element element_suivant;
+void ecriture_indice(cellule *ptr_cell,FILE fichier);
 
-//Description   :
-//Parametre     :
-//Retour        :   booleen
-int est_fin;
+void ecriture_fin(cellule *ptr_cell,FILE fichier);
 
-void ouverture;
-
-void fermeture;
 
 #endif // _GESTION_FICHIER_H_

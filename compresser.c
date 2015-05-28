@@ -8,9 +8,9 @@ void compresser(FILE* f_in, FILE* f_out){
 	init_compression(dictionnaire);
 	sequence *w, *s, *a;
 
-	w = lecture_octet(f_in);
+	w = lecture_bits(f_in,8);
 	while(!est_fin(w)){ 
-		a = lecture_octet(f_in);
+		a = lecture_bits(f_in,8);
 		cell_w = rechercher_dico(w,dictionnaire);
 		cell_s = rechercher_freres(a,cell_w);
 		if(cell_s == NULL){
