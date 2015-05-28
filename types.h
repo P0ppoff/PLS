@@ -1,8 +1,6 @@
 #ifndef _TYPES_H_
 #define _TYPES_H_
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
 
 typedef uint8_t element;
@@ -27,7 +25,4 @@ typedef struct _dico {
 } dico;
 
 #endif //_TYPES_H_
-
-
-
 

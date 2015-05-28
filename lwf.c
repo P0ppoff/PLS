@@ -1,7 +1,8 @@
 #include <stdio.h>
 
-//#include "compresser.h"
-//#include "decompresser.h"
+#include "compresser.h"
+#include "decompresser.h"
+#include "gestion_fichier.h"
 
 /* Notre programme principal doit permettre de choisir entre :
  * une compression de fichier et 
@@ -32,6 +33,11 @@ int main (int argc, char** argv) {
 		option = choix(argv[1]);
 		if(option == 'c'){
 			printf("\n\tCompression\n\n");
+			f_in = ouverture_lecture(argv[2]);
+			f_out = ouverture_ecriture(sortie);
+			compresser(f_in,f_out);
+			fermeture(f_in);
+			fermeture(f_out);
 		}else if(option == 'e'){
 			printf("\n\tExtraction\n\n");
 		}else{		
