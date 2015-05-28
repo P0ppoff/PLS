@@ -20,8 +20,9 @@ void compresser(FILE* f_in, FILE* f_out){
 		if(cell_s != NULL){ // w.a appartient au dictionnaire
 			ajout_queue(w,a); // création de la sequence à rechercher
 		}else{
+			maj_taille(&TAILLE_ECRIT, &INDICE_MAX); // mise a jour pour ecrire sur le bon nombre de bit a la ligne du dessous
 			ecriture_indice(cell_w, f_out, TAILLE_ECRIT);
-			ajout_element(a, cell_w, &TAILLE_ECRIT, &INDICE_MAX);
+			ajout_element(a, cell_w, INDICE_MAX); // on met a jour avant donc on envoie INDICE_MAX en tant que int (on le modifie pas dans cette fonction)
 			w = {a, NULL};
 		}
 	}

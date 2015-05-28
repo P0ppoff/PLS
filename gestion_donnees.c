@@ -1,6 +1,7 @@
 #include "gestion_donnees.h"
 #include "types.h"
-#include "gestion_memoire.h"
+#include "gestion_memoire.h
+"
 
 void init_compression (dico *dictionnaire){
 	int i;
@@ -37,7 +38,7 @@ void init_decompression (dico table[], dico *dictionnaire){
 	}
 }
 
-dico* ajout_element (dico *dictionnaire, sequence *seq, int numero_index){
+dico* ajout_element (dico *dictionnaire, sequence *seq, int * numero_index){
 	cellule *cellule_ajoutee; //creation d'une cellule pour y inserer la sequence a ajouter
 	cellule *ptr_cellule = NULL; 
 	sequence *seq_copie = seq;
@@ -50,6 +51,7 @@ dico* ajout_element (dico *dictionnaire, sequence *seq, int numero_index){
 	ptr_cellule = rechercher_dico(seq, dictionnaire);
 	ptr_cellule -> elt = cellule_ajoutee -> elt;
 	ptr_cellule -> index = cellule_ajoutee -> index;
+
 }
 
 void ajout_queue(sequence *ptr_tete, sequence *ptr_queue){
@@ -81,4 +83,10 @@ cellule* rechercher_dico(sequence *ptr_sequence, dico *dictionnaire){
 	cellule *cellule_copie;
 	cellule_copie = dictionnaire -> racine;
 	return rechercher_freres(cellule_copie);
+}
+void maj_taille( int * TAILLE_ECRIT, int * INDICE_MAX){
+	(*INDICE_MAX) ++;
+	if (2 ^ (*TAILLE_ECRIT) <= (*INDICE_MAX)){
+		(*TAILLE_ECRIT) ++;
+	}
 }
