@@ -8,7 +8,7 @@
 typedef uint8_t element;
 
 typedef struct _sequence {
-	struct _sequence * suite;
+	struct _sequence *suite;
 	element elt;
 } sequence;
 
@@ -23,12 +23,10 @@ typedef struct _cellule {
 
 
 typedef struct _dico {
-	cellule * racine;
+	cellule* racine;
 } dico;
 
-
-
-#endif // _TYPES_H_
+#endif _TYPES_H_
 
 
 
