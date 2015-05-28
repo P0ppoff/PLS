@@ -1,8 +1,9 @@
 #ifndef _GESTION_DONNEES_H_
 #define _GESTION_DONNEES_H_
 
-void init_dico (dico * dic);
-void init_table (dico[] table);
+void init_compression (dico *dictionnaire);
+
+void init_decompression (dico table[], *dico dictionnaire);
 
 //Description   :
 //Parametre     :
