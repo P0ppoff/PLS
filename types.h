@@ -8,19 +8,22 @@
 typedef uint8_t element;
 
 typedef struct _sequence {
-    struct _sequence * suite;
-    element elt;
+	struct _sequence * suite;
+	element elt;
 } sequence;
 
 typedef struct _cellule {
-    struct  _cellule *  parent, frere_suivant, frere_precedent, fils;  //????frere_precedent
-            element     elt;      //8 bits
-            int         index;    //numéro de la séquence
+	struct _cellule *parent;
+	struct _cellule *frere_suivant;
+	struct _cellule *frere_precedent; //????frere_precedent
+	struct _cellule *fils;
+	element elt;      //8 bits
+	int index;    //numéro de la séquence
 } cellule;
 
 
 typedef struct _dico {
-    cellule * racine;
+	cellule * racine;
 } dico;
 
 
