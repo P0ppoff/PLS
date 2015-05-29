@@ -30,15 +30,10 @@ void liberer_cellule (cellule *ptr_cell){
 }
 
 void liberer_dico (dico *ptr_dico){
-    liberer_cellule(ptr_dico);
+    liberer_cellule(ptr_dico->racine);
+    ptr_dico->racine = NULL;
+    free(ptr_dico);
     ptr_dico = NULL;
-}
-
-void liberer_fils (cellule *ptr_cell){
-    liberer_frere(ptr_cell);
-    liberer_fils(ptr_cell);
-    free(ptr_cell);
-    ptr_cell = NULL;
 }
 
 sequence* creer_sequence() {
@@ -48,7 +43,7 @@ sequence* creer_sequence() {
         exit(EXIT_FAILURE);
     }
     ptr_seq->suite = NULL;
-    ptr_seq->elt = NULL;
+    ptr_seq->elt = 0;
     return ptr_seq;
 }
 
@@ -62,11 +57,11 @@ cellule* creer_cellule() {
     ptr_cellule->frere_suivant = NULL;
     ptr_cellule->frere_precedent = NULL;
     ptr_cellule->fils = NULL;
-    ptr_cellule->elt = NULL;
-    ptr_cellule->index = NULL;
+    ptr_cellule->elt = 0;
+    ptr_cellule->index = 0;
     return ptr_cellule;
 }
 
-void modif_lg_table (dico[] table){
-    table[0] = (dico*) realloc(table[0],2*sizeof(table));
+void modif_lg_table (dico *table){
+    table = (dico*) realloc(table,2*sizeof(table));
 }

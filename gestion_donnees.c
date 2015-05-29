@@ -1,11 +1,12 @@
 #include "gestion_donnees.h"
+#include "gestion_memoire.h"
 
 void init_compression (dico *dictionnaire){
 	int i;
 	cellule *cellule_precedente = NULL;
 	cellule *cellule_courante;
-	dictionnaire = creer_cellule();
-	cellule_courante = dictionnaire;
+	dictionnaire->racine = creer_cellule();
+	cellule_courante = dictionnaire->racine;
 	for (i = 0; i < 256; i++)
 	{
 		cellule_courante -> index = i;
@@ -21,13 +22,13 @@ void init_decompression (dico table[], dico *dictionnaire){
 	int i;
 	cellule *cellule_precedente = NULL;
 	cellule *cellule_courante;
-	dictionnaire = creer_cellule();
-	cellule_courante = dictionnaire;
+	dictionnaire->racine = creer_cellule();
+	cellule_courante = dictionnaire->racine;
 	for (i = 0; i < 256; i++)
 	{
 		cellule_courante -> index = i;
 		cellule_courante -> elt = i;
-		table[i] = cellule_courante;
+		table[i].racine = cellule_courante;
 		cellule_courante -> frere_precedent = cellule_precedente;
 		cellule_courante -> frere_suivant = creer_cellule();
 		cellule_precedente = cellule_courante;
@@ -87,7 +88,7 @@ cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule){
 cellule* rechercher_dico(sequence *ptr_sequence, dico *dictionnaire){
 	cellule *cellule_copie;
 	cellule_copie = dictionnaire -> racine;
-	return rechercher_fils(cellule_copie);
+	return rechercher_fils(ptr_sequence,cellule_copie);
 }
 
 void inserer_tete(sequence *seq_ajout,sequence *ptr_seq) {
@@ -103,7 +104,7 @@ void inserer_tete(sequence *seq_ajout,sequence *ptr_seq) {
 sequence* recupere_seq(dico *table,int i){
 	sequence *seq_retour;
 	sequence *nouvelle_seq;
-	cellule *courante = table[i];
+	cellule *courante = table[i].racine;
 	while(courante != NULL) {
 		nouvelle_seq = creer_sequence();
 		nouvelle_seq -> elt = courante -> elt;

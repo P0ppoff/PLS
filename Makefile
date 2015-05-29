@@ -4,8 +4,8 @@ CFLAGS=
 all: Lwf
 
 #Lwf: lwf.o gestion_fichier.o compresser.o decompresser.o
-Lwf: lwf.o gestion_fichier.o compresser.o 
-	gcc $^ -o Lwf
+Lwf: lwf.o gestion_fichier.o compresser.o gestion_donnees.o gestion_memoire.o
+	$(CC) $^ -o Lwf
 
 #lwf.o: lwf.c compresser.h decompresser.h gestion_fichier.h
 lwf.o: lwf.c compresser.h gestion_fichier.h

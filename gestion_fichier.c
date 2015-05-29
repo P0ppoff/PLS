@@ -27,7 +27,7 @@ sequence* lecture_bits(FILE *fichier, int nb_bits){
 }
 
 int est_fin(sequence *ptr_seq){
-	if(ptr_seq == EOF ) {
+	if(ptr_seq->elt == EOF ) {
 		return 1;
 	}
 	else {
