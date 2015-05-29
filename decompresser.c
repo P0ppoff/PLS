@@ -14,7 +14,7 @@ void decompresser(FILE* f_in, FILE* f_out){
 	a = recupere_seq(table, i); // renvoie la séquence pour aboutir à la case d'index i // antention à la fin de fichier, si table[i]==NULL soit fin de fichier -> a = EOF soit increment
 	w = a; // transfère dans la séquence w
 	ecriture_seq(f_out, w, TAILLE_ECRIT);
-	while(!est_fin(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
+	while(!est_fin_fichier(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
 		iprime = lecture_bits(f_in, TAILLE_LU);
 		indice = conversion(iprime); // conversion d'une séquence en l'entier correspondant
 		if(table[indice] == NULL){
@@ -25,7 +25,7 @@ void decompresser(FILE* f_in, FILE* f_out){
 		}
 		ecriture_seq(f_out, wprime, TAILLE_ECRIT);
 		a = extraction_tete(wprime);
-		ajout_element(w, a, &TAILLE_LU, &INDICE_MAX, table); // ajout l'élément w.a en mettant le reste à jour
+		ajout_element_concat(w, a, &TAILLE_LU, &INDICE_MAX, table); // ajout l'élément w.a en mettant le reste à jour
 		i = iprime;
 	}
 }

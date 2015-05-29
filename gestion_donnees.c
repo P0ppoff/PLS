@@ -113,3 +113,15 @@ sequence* recupere_seq(dico *table,int i){
 	}
 	return seq_retour;
 }
+
+sequence* extraction_tete(sequence *a_extraire){
+	sequence *retour = creer_sequence();
+	retour -> elt = a_extraire -> elt;
+	return retour;
+}
+
+void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_MAX, dico *table){
+	cellule *ptr_cell;
+	ptr_cell = rechercher_dico(w,table);
+	ajout_element(a, ptr_cell, &INDICE_MAX, &TAILLE_ECRIT);
+}

@@ -18,4 +18,8 @@ cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule);
 
 cellule* rechercher_dico(sequence *ptr_sequence, dico *dictionnaire);
 
+sequence* extraction_tete(sequence *a_extraire);
+
+void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_MAX, dico *table);
+
 #endif // _GESTION_DONNEES_H_

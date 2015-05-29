@@ -13,7 +13,7 @@ void fermeture(FILE *fichier);
 
 sequence* lecture_bits(FILE *fichier, int nb_bits);
 
-int est_fin(sequence *ptr_seq);
+int est_fin_fichier(sequence *ptr_seq);
 
 void ecriture_indice(cellule *ptr_cell,FILE *fichier, int TAILLE_ECRIT);
 
