@@ -1,16 +1,17 @@
 #ifndef _GESTION_FICHIER_H_
 #define _GESTION_FICHIER_H_
 
-#include "types.h"
-#include <sdtlib.h>
+#include <stdlib.h>
 #include <stdio.h>
+
+#include "types.h"
 
 FILE* ouverture_lecture(char nom_fichier[]);
 FILE* ouverture_ecriture(char nom_fichier[]);
 
 void fermeture(FILE *fichier);
 
-sequence* lecture_bits(FILE fichier, int nb_bits);
+sequence* lecture_bits(FILE *fichier, int nb_bits);
 
 int est_fin(sequence *ptr_seq);
 

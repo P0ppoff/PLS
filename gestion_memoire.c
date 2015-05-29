@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "types.h"
+#include "gestion_memoire.h"
 
 void liberer_sequence (sequence *ptr_seq){
     sequence *courant;

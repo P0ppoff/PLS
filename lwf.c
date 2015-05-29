@@ -22,9 +22,13 @@ char choix(char* champs_option){
  	}
 }
 
-int main (int argc, char** argv) {
+int main(int argc, char **argv) {
 
 	char option = 0; // équivalent à option = '\0'
+
+	char *sortie;
+
+	FILE *f_in, *f_out;
 
 	if(argc != 3){
 		printf("\n\tUtilisation : ./Lwf -[c/e] fichier\n\n");
@@ -40,6 +44,11 @@ int main (int argc, char** argv) {
 			fermeture(f_out);
 		}else if(option == 'e'){
 			printf("\n\tExtraction\n\n");
+			f_in = ouverture_lecture(argv[2]);
+			f_out = ouverture_ecriture(sortie);
+			decompresser(f_in,f_out);
+			fermeture(f_in);
+			fermeture(f_out);
 		}else{		
 			printf("\n\tUtilisation : ./Lwf -[c/e] fichier\n\n");
 			return 1;

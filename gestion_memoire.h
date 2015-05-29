@@ -1,18 +1,18 @@
 #ifndef _GESTION_MEMOIRE_H_
 #define _GESTION_MEMOIRE_H_
+
 #include <stdio.h>
+
 #include "types.h"
 
-void liberer_sequence (sequence *ptr_seq){;
+void liberer_sequence (sequence *ptr_seq);
 
 void liberer_dico (dico *ptr_dico);
 
-sequence* creer_sequence() ;
+sequence* creer_sequence();
 
-cellule* creer_cellule() ;
+cellule* creer_cellule();
 
-void modif_lg_table (dico[] table);
-
-
+void modif_lg_table (dico table[]);
 
 #endif // _GESTION_MEMOIRE_H_

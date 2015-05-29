@@ -7,8 +7,6 @@ void decompresser(FILE* f_in, FILE* f_out){
 	int TAILLE_ECRIT = 8;
 	dico *dictionnaire;
 	dico table[];
-	//cellule *cell_w = NULL;
-	//cellule *cell_s = NULL;
 	sequence *i, *iprime, *a, *w, *wprime;
 	int indice;
 
