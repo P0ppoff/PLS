@@ -45,7 +45,7 @@ dico* ajout_element (dico *dictionnaire, sequence *seq, int numero_index){
 		seq_copie = seq_copie -> suite;
 	}
 	cellule_ajoutee -> elt = seq_copie -> elt; // ajout du dernier element de la sequence a la cellule
-	cellule_ajoutee -> index = numero_index;
+	cellule_ajoutee -> index = numero_index; 
 	ptr_cellule = rechercher_dico(seq, dictionnaire);
 	ptr_cellule -> elt = cellule_ajoutee -> elt;
 	ptr_cellule -> index = cellule_ajoutee -> index;
