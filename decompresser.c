@@ -1,12 +1,11 @@
 #include "decompresser.h"
-#include "types.h"
 
 void decompresser(FILE* f_in, FILE* f_out){
 	int TAILLE_LU = 9; // on commence sur 9 pour avoir deux infos de plus : Fin de fichier & incrémentation du nombre de bits à écrire
 	int INDICE_MAX = 257; // dernier indice donné
 	int TAILLE_ECRIT = 8;
 	dico *dictionnaire;
-	dico table[];
+	dico *table;
 	sequence *i, *iprime, *a, *w, *wprime;
 	int indice;
 
@@ -17,7 +16,7 @@ void decompresser(FILE* f_in, FILE* f_out){
 	ecriture_seq(f_out, w, TAILLE_ECRIT);
 	while(!est_fin(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
 		iprime = lecture_bits(f_in, TAILLE_LU);
-		indice = conversion(iprime); // convertion d'une séquence en l'entier correspondant
+		indice = conversion(iprime); // conversion d'une séquence en l'entier correspondant
 		if(table[indice] == NULL){
 			wprime = recupere_seq(table, i);
 			ajout_queue(wprime, a);

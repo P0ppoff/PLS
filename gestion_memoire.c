@@ -60,7 +60,7 @@ cellule* creer_cellule() {
     }
     ptr_cellule->parent = NULL;
     ptr_cellule->frere_suivant = NULL;
-    ptr_cellule->frere_precedant = NULL;
+    ptr_cellule->frere_precedent = NULL;
     ptr_cellule->fils = NULL;
     ptr_cellule->elt = NULL;
     ptr_cellule->index = NULL;

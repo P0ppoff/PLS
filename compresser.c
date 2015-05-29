@@ -20,8 +20,9 @@ void compresser(FILE* f_in, FILE* f_out){
 		}else{
 			maj_taille(&TAILLE_ECRIT, &INDICE_MAX); // mise a jour pour ecrire sur le bon nombre de bit a la ligne du dessous
 			ecriture_indice(cell_w, f_out, TAILLE_ECRIT);
-			ajout_element(a, cell_w, INDICE_MAX); // on met a jour avant donc on envoie INDICE_MAX en tant que int (on le modifie pas dans cette fonction)
-			w = {a, NULL};
+			ajout_element(a, cell_w, &INDICE_MAX, &TAILLE_ECRIT); // on met a jour avant donc on envoie INDICE_MAX en tant que int (on le modifie pas dans cette fonction)
+			w -> elt = a -> elt;
+			w -> suite = NULL;
 		}
 	}
 	ecriture_fin(cell_w, f_out, TAILLE_ECRIT); // fichier vide ou pas 

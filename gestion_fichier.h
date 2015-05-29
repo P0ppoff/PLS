@@ -15,9 +15,9 @@ sequence* lecture_bits(FILE *fichier, int nb_bits);
 
 int est_fin(sequence *ptr_seq);
 
-void ecriture_indice(cellule *ptr_cell,FILE fichier);
+void ecriture_indice(cellule *ptr_cell,FILE *fichier, int TAILLE_ECRIT);
 
-void ecriture_fin(cellule *ptr_cell,FILE fichier);
+void ecriture_fin(cellule *ptr_cell,FILE *fichier, int TAILLE_ECRIT);
 
 
 #endif // _GESTION_FICHIER_H_

@@ -2,6 +2,7 @@
 #define _GESTION_MEMOIRE_H_
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "types.h"
 
