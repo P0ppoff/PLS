@@ -24,5 +24,10 @@ typedef struct _dico {
 	cellule* racine;
 } dico;
 
+typedef struct _tampon {
+	element buffer;
+	int nb_bits_restants;
+} tampon;
+
 #endif //_TYPES_H_
 
