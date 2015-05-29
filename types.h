@@ -6,8 +6,8 @@
 typedef uint8_t element;
 
 typedef struct _sequence {
-	struct _sequence *suite;
 	element elt;
+	struct _sequence *suite;
 } sequence;
 
 typedef struct _cellule {
@@ -16,7 +16,7 @@ typedef struct _cellule {
 	struct _cellule *frere_precedent; //????frere_precedent
 	struct _cellule *fils;
 	element elt;      //8 bits
-	int index;    //numéro de la séquence
+	int index;    //numÃ©ro de la sÃ©quence
 } cellule;
 
 
