@@ -49,7 +49,7 @@ void inserer_tampon(sequence *seq, tampon *t, int nb, int *nb_bits_remplis){ // 
             courante -> suite = creer_sequence(); // On doit créer une nouvelle case
             masque <<= index_last_full; //on efface les bits déja lus du masque et on place les autres en poid fort
             courante -> elt = masque; // On ajoute les derniers bits à lire dans les poids forts de ntre nouvelle case
-            nb_lus = sizeof(element) - index_last_full; 
+            nb_lus = sizeof(element) - index_last_full;
             *nb_bits_remplis += nb_lus;
         }
     }
@@ -66,7 +66,7 @@ sequence* lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t){
                 inserer_tampon (seq, t, (t -> nb_bits_restants), &nb_bits_remplis); // fonction qui insere nb_bits_restants bits de poid faible du buffer dans la sequence.
             }else{ // Cas ou il y a plus de bits lisible dans le tampon que de bit a lire.
                 inserer_tampon (seq, t, n, &nb_bits_remplis);
-                (t -> nb_bits_restants) = (t -> nb_bits_restants) - n; //maj du nombre de bit encore non lu dans le tampon pour la prochaine utilisation de la fonction car ici 
+                (t -> nb_bits_restants) = (t -> nb_bits_restants) - n; //maj du nombre de bit encore non lu dans le tampon pour la prochaine utilisation de la fonction car ici
                 n = 0; // Comme il y avais plus de bit lisible que de bit a lire et qu'on les a inseré il faut mettre le nombre de bit a lire a 0 car le traitement est fini.
             }
         }
@@ -90,7 +90,7 @@ int est_fin_fichier(sequence *ptr_seq){
 void ecrire(tampon *t, FILE *f){ // écriture du tampon puis mise à jour
     fputc(t->buffer, f);
     t->buffer = 0;
-    t->nb_bits_restants = siezof(element);
+    t->nb_bits_restants = sizeof(element);
 }
 
 void ecriture_indice(cellule *cell_w, FILE *f_out, int TAILLE_ECRIT, tampon *t){
@@ -104,10 +104,14 @@ void ecriture_indice(cellule *cell_w, FILE *f_out, int TAILLE_ECRIT, tampon *t){
         t->buffer |= (element) ((cell_w->index) >> (TAILLE_ECRIT - t->nb_bits_restants));
         TAILLE_ECRIT -= t->nb_bits_restants; // Mise à jour du nombre de bits qu'il reste à écrire
         ecrire(t, f_out); // écriture du tampon car il est plein
-        ecriture_indice(cell_w, f_out, TAILLE_ECRIT, t); // Finalement la TAILLE_ECRIT correspond aussi aunombre de bits qu'il reste à écrire   
+        ecriture_indice(cell_w, f_out, TAILLE_ECRIT, t); // Finalement la TAILLE_ECRIT correspond aussi aunombre de bits qu'il reste à écrire
     }
 }
 
 void ecriture_fin(cellule *ptr_cell,FILE *fichier, int TAILLE_ECRIT, tampon *t){
-
+    if(ptr_cell!=NULL){
+        ecriture_indice(cell_w, fichier, TAILLE_ECRIT, t);
+        fputc(0,fichier);
+    }
+    fclose(fichier);
 }
