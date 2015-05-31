@@ -40,10 +40,13 @@ void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT)
 	cellule *courante;
 	cellule *nouvelle_cell;
 	nouvelle_cell = creer_cellule();
+	//maj de l'indice 
 	(*INDICE_MAX) ++;
 	if (2 ^ (*TAILLE_ECRIT) <= (*INDICE_MAX)){
 		(*TAILLE_ECRIT) ++;
+
 	}
+
 	nouvelle_cell -> elt = a -> elt;
 	nouvelle_cell -> index = (*INDICE_MAX);
 	nouvelle_cell -> parent = w;
@@ -124,4 +127,14 @@ void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_
 	cellule *ptr_cell;
 	ptr_cell = rechercher_dico(w,table);
 	ajout_element(a, ptr_cell, &INDICE_MAX, &TAILLE_ECRIT);
+}
+
+int conversion ( sequence * seq, int TAILLE_LU){
+	int somme = 0;
+	while ((seq -> suite) != NULL){ 
+		somme = somme + (int)(seq -> elt);
+		seq = (seq -> suite)
+	}
+	somme = somme + (int)(seq -> elt)>>(8 - (TAILLE_LU%8))
+	return somme;
 }
