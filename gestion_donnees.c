@@ -40,7 +40,7 @@ void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT)
 	cellule *courante;
 	cellule *nouvelle_cell;
 	nouvelle_cell = creer_cellule();
-	//maj de l'indice 
+	//maj de l'indice
 	(*INDICE_MAX) ++;
 	if (2 ^ (*TAILLE_ECRIT) <= (*INDICE_MAX)){
 		(*TAILLE_ECRIT) ++;
@@ -129,12 +129,17 @@ void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_
 	ajout_element(a, ptr_cell, &INDICE_MAX, &TAILLE_ECRIT);
 }
 
+
 int conversion ( sequence * seq, int TAILLE_LU){
-	int somme = 0;
-	while ((seq -> suite) != NULL){ 
+	int i,somme = 0;
+	while (seq  != NULL){
+		somme = somme * 256; //décalage d'un octet, de 8 bits (2^8=256)
 		somme = somme + (int)(seq -> elt);
-		seq = (seq -> suite)
+		seq = (seq -> suite);
 	}
-	somme = somme + (int)(seq -> elt)>>(8 - (TAILLE_LU%8))
+	//décalage vers la droite pour corriger le remplissage de 0
+	for(i = 0; i < 8-(TAILLE_LU%8); i++){
+		somme = somme / 2 ;
+	}
 	return somme;
 }
