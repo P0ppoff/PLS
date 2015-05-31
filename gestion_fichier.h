@@ -18,7 +18,7 @@ int est_fin_fichier(sequence *ptr_seq);
 
 void ecriture_indice(cellule *cell_w, FILE *f_out, int TAILLE_ECRIT, tampon *t);
 
-void ecriture_fin(cellule *ptr_cell,FILE *fichier, int TAILLE_ECRIT, tampon *t);
+void ecriture_fin(FILE *fichier, int TAILLE_ECRIT, tampon *t);
 
 
 #endif // _GESTION_FICHIER_H_
