@@ -132,10 +132,11 @@ void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_
 
 int conversion ( sequence * seq, int TAILLE_LU){
 	int i,somme = 0;
-	while (seq  != NULL){
+	sequence *copie = seq;
+	while (copie  != NULL){
 		somme = somme * 256; //décalage d'un octet, de 8 bits (2^8=256)
-		somme = somme + (int)(seq -> elt);
-		seq = (seq -> suite);
+		somme = somme + (int)(copie -> elt);
+		copie = (copie -> suite);
 	}
 	//décalage vers la droite pour corriger le remplissage de 0
 	for(i = 0; i < 8-(TAILLE_LU%8); i++){
