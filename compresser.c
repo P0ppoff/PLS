@@ -25,6 +25,6 @@ void compresser(FILE* f_in, FILE* f_out){
 			w -> suite = NULL;
 		}
 	}
-	ecriture_fin(cell_w, f_out, TAILLE_ECRIT, &be); // fichier vide ou pas
+	ecriture_fin(f_out, TAILLE_ECRIT, &be); // fichier vide ou pas
 }
 
