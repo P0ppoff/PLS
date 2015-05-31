@@ -7,8 +7,7 @@ void init_compression (dico *dictionnaire){
 	cellule *cellule_courante;
 	dictionnaire->racine = creer_cellule();
 	cellule_courante = dictionnaire->racine;
-	for (i = 0; i < 256; i++)
-	{
+	for (i = 0; i < 256; i++){
 		cellule_courante -> index = i;
 		cellule_courante -> elt = i;
 		cellule_courante -> frere_precedent = cellule_precedente;
@@ -24,8 +23,7 @@ void init_decompression (dico table[], dico *dictionnaire){
 	cellule *cellule_courante;
 	dictionnaire->racine = creer_cellule();
 	cellule_courante = dictionnaire->racine;
-	for (i = 0; i < 256; i++)
-	{
+	for (i = 0; i < 256; i++){
 		cellule_courante -> index = i;
 		cellule_courante -> elt = i;
 		table[i].racine = cellule_courante;
@@ -44,9 +42,7 @@ void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT)
 	(*INDICE_MAX) ++;
 	if (2 ^ (*TAILLE_ECRIT) <= (*INDICE_MAX)){
 		(*TAILLE_ECRIT) ++;
-
 	}
-
 	nouvelle_cell -> elt = a -> elt;
 	nouvelle_cell -> index = (*INDICE_MAX);
 	nouvelle_cell -> parent = w;
@@ -95,20 +91,19 @@ cellule* rechercher_dico(sequence *ptr_sequence, dico *dictionnaire){
 }
 
 void inserer_tete(sequence *seq_ajout,sequence *ptr_seq) {
-	if(ptr_seq == NULL) {
+	if(ptr_seq == NULL){
 		ptr_seq = seq_ajout;
-	}else {
+	}else{
 		seq_ajout -> suite = ptr_seq;
 		ptr_seq = seq_ajout;
 	}
 }
 
-
 sequence* recupere_seq(dico *table,int i){
 	sequence *seq_retour;
 	sequence *nouvelle_seq;
 	cellule *courante = table[i].racine;
-	while(courante != NULL) {
+	while(courante != NULL){
 		nouvelle_seq = creer_sequence();
 		nouvelle_seq -> elt = courante -> elt;
 		inserer_tete(nouvelle_seq,seq_retour);
@@ -130,17 +125,15 @@ void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_
 }
 
 
-int conversion ( sequence * seq, int TAILLE_LU){
+int conversion ( sequence *seq, int TAILLE_LU){
 	int i,somme = 0;
 	sequence *copie = seq;
 	while (copie  != NULL){
-		somme = somme * 256; //décalage d'un octet, de 8 bits (2^8=256)
-		somme = somme + (int)(copie -> elt);
-		copie = (copie -> suite);
+		somme <<= sizeof(element);
+		somme += (int)(copie->elt);
+		copie = (copie->suite);
 	}
 	//décalage vers la droite pour corriger le remplissage de 0
-	for(i = 0; i < 8-(TAILLE_LU%8); i++){
-		somme = somme / 2 ;
-	}
+	somme >>= sizeof(element) - (TAILLE_LU % sizeof(element));
 	return somme;
 }

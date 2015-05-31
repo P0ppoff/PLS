@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "compresser.h"
-//#include "decompresser.h"
+#include "decompresser.h"
 #include "gestion_fichier.h"
 
 /* Notre programme principal doit permettre de choisir entre :
@@ -88,11 +88,11 @@ int main(int argc, char **argv) {
 			printf("\n\tExtraction\n\n");
 			extraire_nom(argv[2], sortie);
 			printf("%s\n", sortie);
-			// f_in = ouverture_lecture(argv[2]);
-			// f_out = ouverture_ecriture(sortie);
-			// decompresser(f_in,f_out);
-			// fermeture(f_in);
-			// fermeture(f_out);
+			f_in = ouverture_lecture(argv[2]);
+			f_out = ouverture_ecriture(sortie);
+			decompresser(f_in,f_out);
+			fermeture(f_in);
+			fermeture(f_out);
 		}else{		
 			printf("\n\tUtilisation : ./Lwf -[c/e] fichier\n\n");
 			return 1;
