@@ -166,11 +166,11 @@ int conversion (sequence *seq, int TAILLE_LU){
 	int somme = 0;
 	sequence *copie = seq;
 	while (copie  != NULL){
-		somme <<= sizeof(element);
+		somme <<= 8;
 		somme += (int)(copie->elt);
 		copie = (copie->suite);
 	}
 	//décalage vers la droite pour corriger le remplissage de 0
-	somme >>= sizeof(element) - (TAILLE_LU % sizeof(element));
+	somme >>= 8 - (TAILLE_LU % 8);
 	return somme;
 }
