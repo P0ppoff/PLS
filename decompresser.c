@@ -14,10 +14,10 @@ void decompresser(FILE* f_in, FILE* f_out){
 	init_decompression(table, dictionnaire); 
 	lecture_bits(f_in, TAILLE_LU, &bl, i);
 	recupere_seq(table, i, a); // renvoie la séquence pour aboutir à la case d'index i // antention à la fin de fichier, si table[i]==NULL soit fin de fichier -> a = EOF soit increment
-	w = a; // transfère dans la séquence w
+	extraction_tete(a, w); // transfère dans la séquence w
 	ecriture_seq(f_out, w); // nous n'utilisons pas de buffer d'écriture car nous écrivons sur un octet -> amélioration = passer par un buffer pour faire des écriture sur plus de 8 bits
 	while(!est_fin_fichier(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
-		lecture_bits(f_in, TAILLE_LU, iprime);
+		lecture_bits(f_in, TAILLE_LU, &bl, iprime);
 		indice = conversion(iprime); // conversion d'une séquence en l'entier correspondant
 		if(table[indice].racine == NULL){
 			recupere_seq(table, i, wprime);
@@ -29,5 +29,6 @@ void decompresser(FILE* f_in, FILE* f_out){
 		extraction_tete(wprime, a);
 		ajout_element_concat(w, a, &TAILLE_LU, &INDICE_MAX, table); // ajout l'élément w.a en mettant le reste à jour
 		i = iprime;
+		recupere_seq(table , i, w);
 	}
 }
