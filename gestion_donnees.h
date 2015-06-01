@@ -12,9 +12,9 @@ void recupere_seq(dico *table, int i, sequence *seq_retour);
 
 void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT);
 
-void ajout_queue(sequence *ptr_tete, sequence *ptr_queue);
+void ajout_queue(sequence *ptr_tete, sequence *ajout);
 
-cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule);
+cellule* rechercher_dans_fils(sequence *ptr_sequence, cellule *ptr_cellule);
 
 cellule* rechercher_dico(sequence *ptr_sequence, dico dictionnaire);
 

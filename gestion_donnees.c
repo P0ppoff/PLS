@@ -7,7 +7,7 @@ void init_compression (dico *dictionnaire){ // initialisation du dictionnaire po
 	cellule *cellule_courante;
 	dictionnaire->racine = creer_cellule(); //creation de la première cellule
 	cellule_courante = dictionnaire->racine;
-	for (i = 0; i < 256; i++){ //On remplit 256 cellules
+	for (i = 0; i < 255; i++){ //On remplit 256 cellules
 		cellule_courante -> index = i; //mise a jour de l'index
 		cellule_courante -> elt = i; // mise a jour du contenu
 		cellule_courante -> frere_precedent = cellule_precedente; //chainage des cellules
@@ -15,6 +15,9 @@ void init_compression (dico *dictionnaire){ // initialisation du dictionnaire po
 		cellule_precedente = cellule_courante; // on avance d'une cellule
 		cellule_courante = cellule_courante -> frere_suivant;
 	}
+	cellule_courante -> index = i; //mise a jour de l'index
+	cellule_courante -> elt = i; // mise a jour du contenu
+	cellule_courante -> frere_precedent = cellule_precedente; //chainage des cellules
 }
 
 void init_decompression (dico *table, dico *dictionnaire){ // Initialisation du dico et de la table pour la decompression
@@ -32,6 +35,10 @@ void init_decompression (dico *table, dico *dictionnaire){ // Initialisation du 
 		cellule_precedente = cellule_courante;
 		cellule_courante = cellule_courante -> frere_suivant;
 	}
+	cellule_courante -> index = i;
+	cellule_courante -> elt = i;
+	table[i].racine = cellule_courante;
+	cellule_courante -> frere_precedent = cellule_precedente;
 }
 
 void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT){
@@ -60,35 +67,65 @@ void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT)
 
 }
 
-void ajout_queue(sequence *ptr_tete, sequence *ptr_queue){
+void ajout_queue(sequence *ptr_tete, sequence *ajout){
 	sequence *seq_copie = ptr_tete;
-	while(seq_copie != NULL){
-		seq_copie = seq_copie -> suite; //on parcours la sequence jusqu'a la fin
+	if (seq_copie != NULL) {
+		while(seq_copie -> suite != NULL){
+			seq_copie = seq_copie -> suite; //on parcours la sequence jusqu'a la fin
+		}
+		seq_copie -> suite  = ajout ; //on place la queue a la fin
 	}
-	seq_copie -> suite = ptr_queue; //on place la queue a la fin
+	else {
+		ptr_tete = creer_sequence();
+		ptr_tete  = ajout;
+	}
 }
 
-
-cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule){
-	cellule *cellule_copie;
-	sequence *sequence_copie;
-	cellule_copie = ptr_cellule;
-	sequence_copie = ptr_sequence;
-	// on parcours les sequences jusqu'a avoir les memes ou une finie
-	while(sequence_copie != NULL && cellule_copie != NULL){
-		while(cellule_copie -> elt != sequence_copie -> elt){
-			cellule_copie = cellule_copie -> frere_suivant;
-		}
-		sequence_copie = sequence_copie -> suite;
-		cellule_copie = cellule_copie -> fils;
+//on recherche la sequence dans les freres de la cellule
+cellule* rechercher_dans_fils(sequence *ptr_sequence, cellule *ptr_cellule){
+	cellule *cellule_courante;
+	sequence *sequence_courante = ptr_sequence;
+	if (ptr_cellule != NULL) {
+		cellule_courante = ptr_cellule -> fils;
+		do {
+			while (cellule_courante != NULL && cellule_courante -> elt != sequence_courante -> elt){
+				cellule_courante = cellule_courante -> frere_suivant;
+			}
+			if (cellule_courante != NULL) {
+				sequence_courante = sequence_courante -> suite;
+				cellule_courante = cellule_courante -> fils;
+			}		
+		} while (cellule_courante != NULL);
 	}
-	return cellule_copie;
+	return cellule_courante;
+}
+
+//on recherche la sequence dans les freres de la cellule
+cellule* rechercher_dans_freres(sequence *ptr_sequence, cellule *ptr_cellule){
+	cellule *cellule_courante = ptr_cellule;
+	sequence *sequence_courante = ptr_sequence;
+	printf("\t%p\n",cellule_courante);
+	if (ptr_cellule != NULL) {
+		do {
+			while (cellule_courante != NULL && cellule_courante -> elt != sequence_courante -> elt){
+				cellule_courante = cellule_courante -> frere_suivant;
+				printf("\t%p\n",cellule_courante);
+			}
+			if (cellule_courante != NULL) {
+				sequence_courante = sequence_courante -> suite;
+				cellule_courante = cellule_courante -> fils;
+				printf("\t%p\n",cellule_courante);
+			}		
+		} while (cellule_courante != NULL);
+	}
+	printf("\t%p\n",cellule_courante);
+	return cellule_courante;
 }
 
 
 cellule* rechercher_dico(sequence *ptr_sequence, dico dictionnaire){
 	cellule *cellule_recherche;
-	cellule_recherche = rechercher_fils(ptr_sequence, dictionnaire.racine);
+	cellule_recherche = rechercher_dans_freres(ptr_sequence, dictionnaire.racine);
 	return cellule_recherche;
 }
 
