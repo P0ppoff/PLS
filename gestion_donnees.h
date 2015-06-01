@@ -8,7 +8,7 @@ void init_compression (dico *dictionnaire);
 
 void init_decompression (dico table[], dico *dictionnaire);
 
-sequence* recupere_seq(dico *table,int i);
+void recupere_seq(dico *table, int i, sequence *seq_retour);
 
 void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT);
 
@@ -18,7 +18,7 @@ cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule);
 
 cellule* rechercher_dico(sequence *ptr_sequence, dico *dictionnaire);
 
-sequence* extraction_tete(sequence *a_extraire);
+void extraction_tete(sequence *a_extraire, sequence *retour);
 
 void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_MAX, dico *table);
 

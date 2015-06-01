@@ -57,8 +57,8 @@ void inserer_tampon(sequence *seq, tampon *t, int nb, int *nb_bits_remplis){ // 
     }
 }
 
-sequence* lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t){
-    sequence *seq = creer_sequence();
+void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence *seq){
+    seq = creer_sequence();
     int nb_bits_remplis = 0;
     int n = nb_bits_a_lire; // creation d'un entier qu'on modifieras (est utils car on ne veux pas modifier nb_bits qui n'est qu'une valeur d'entrée )
     while (n != 0){ // ON regarde si on a encore des bits a lire.
@@ -77,7 +77,6 @@ sequence* lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t){
             (t -> nb_bits_restants) = 8;
         }
     }
-    return seq;
 }
 
 int est_fin_fichier(sequence *ptr_seq){

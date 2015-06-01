@@ -99,8 +99,7 @@ void inserer_tete(sequence *seq_ajout,sequence *ptr_seq) {
 	}
 }
 
-sequence* recupere_seq(dico *table,int i){
-	sequence *seq_retour;
+void recupere_seq(dico *table, int i, sequence *seq_retour){
 	sequence *nouvelle_seq;
 	cellule *courante = table[i].racine;
 	while(courante != NULL){
@@ -109,13 +108,11 @@ sequence* recupere_seq(dico *table,int i){
 		inserer_tete(nouvelle_seq,seq_retour);
 		courante = courante -> parent;
 	}
-	return seq_retour;
 }
 
-sequence* extraction_tete(sequence *a_extraire){
-	sequence *retour = creer_sequence();
+void extraction_tete(sequence *a_extraire, sequence *retour){
+	retour = creer_sequence();
 	retour -> elt = a_extraire -> elt;
-	return retour;
 }
 
 void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_MAX, dico *table){
