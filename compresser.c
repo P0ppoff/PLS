@@ -5,6 +5,17 @@ void init_tampon(tampon *t){
 	t -> buffer = 0;
 }
 
+void afficher_sequence (sequence * seq){
+	sequence * courante = seq;
+	printf("le pointeur de cette séquence est %p\n", seq);
+	printf("l'élément de la séquence vaut %x ", courante -> elt);
+	while (courante -> suite != NULL){
+		courante = courante -> suite;
+		printf("%x ", courante -> elt);
+	}
+	printf("\n");
+}
+
 void compresser(FILE* f_in, FILE* f_out){
 	int TAILLE_ECRIT = 9; // on commence sur 9 pour avoir deux infos de plus : Fin de fichier & incrémentation du nombre de bits à écrire
 	int INDICE_MAX = 257; // dernier indice donné
@@ -18,11 +29,13 @@ void compresser(FILE* f_in, FILE* f_out){
 
 	init_compression(&dictionnaire);
 	init_tampon(&bl);
-	w = creer_sequence(); printf("\t%p\n", w); printf("\t%i\n", w -> elt);
-	lecture_bits(f_in, TAILLE_LU, &bl, w); printf("\t%p\n", w);
-	while(!est_fin_fichier(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
+	w = creer_sequence();
+	lecture_bits(f_in, TAILLE_LU, &bl, w);
+	afficher_sequence(w);
+	//while(!est_fin_fichier(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
 		a = creer_sequence();
-		lecture_bits(f_in, TAILLE_LU, &bl, a); printf("\t%p\n", a);
+		lecture_bits(f_in, TAILLE_LU, &bl, a);
+		afficher_sequence(a);
 		cell_w = rechercher_dico(w, dictionnaire);
 		cell_s = rechercher_dans_fils(a, cell_w); // pramatère : le parent
 		if(cell_s != NULL){ // w.a appartient au dictionnaire
@@ -33,7 +46,7 @@ void compresser(FILE* f_in, FILE* f_out){
 			w -> elt = a -> elt;
 			w -> suite = NULL;
 		}
-	}
+	//}
 	ecriture_fin(f_out, TAILLE_ECRIT, &be); // fichier vide ou pas
 }
 

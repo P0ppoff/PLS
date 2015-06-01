@@ -55,7 +55,7 @@ void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence *seq){
     //nb_bits_restants correspond au nombre de bit dans la séquence courante qui n'ont pas été modifié ainsi nb_bits_restant doit etre compris entre 0 et 8 
     //si nb_bits_restants = 0 alors la séquence est PLEINE et si nb_bits_restants = 8 la séquence est VIDE.
     //Comme on rempli les poid fort en premier, les bits non valide et qu'il faut modifier lorsque (nb_bits_restant != 0) sont les nb_bits_restants bits de poid faible (logique)
-    int nb_bits_restants = 0;
+    int nb_bits_restants = 8;
     //nb_bits_a_lire correspond au nombre de bits qu'il reste à lire en tout (logique)
     //nb_bits_dispo correspond aux nombre de bits de poids faible du buffer qui n'on pas encore été utilisé et qui son donc disponible (logique)
     sequence *courante = seq;
