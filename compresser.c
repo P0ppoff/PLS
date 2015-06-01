@@ -4,19 +4,19 @@ void compresser(FILE* f_in, FILE* f_out){
 	int TAILLE_ECRIT = 9; // on commence sur 9 pour avoir deux infos de plus : Fin de fichier & incrémentation du nombre de bits à écrire
 	int INDICE_MAX = 257; // dernier indice donné
 	int TAILLE_LU = 8;
-	dico *dictionnaire = NULL;
+	dico dictionnaire;
 	cellule *cell_w = NULL;
 	cellule *cell_s = NULL;
 	sequence *w = NULL;
 	sequence *a = NULL;
 	tampon bl, be; // Les deux buffers de lecture et écriture
 
-	init_compression(dictionnaire); 
+	init_compression(&dictionnaire); 
 	lecture_bits(f_in, TAILLE_LU, &bl, w);
 	while(!est_fin_fichier(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
 		lecture_bits(f_in, TAILLE_LU, &bl, a);
-		rechercher_dico(w, dictionnaire, cell_w);
-		rechercher_fils(a, cell_w, cell_s); // pramatère : le parent
+		cell_w = rechercher_dico(w, dictionnaire);
+		cell_s = rechercher_fils(a, cell_w); // pramatère : le parent
 		if(cell_s != NULL){ // w.a appartient au dictionnaire
 			ajout_queue(w,a); // création de la sequence à rechercher
 		}else{

@@ -69,7 +69,8 @@ void ajout_queue(sequence *ptr_tete, sequence *ptr_queue){
 }
 
 
-void rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule, cellule *cellule_copie){
+cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule){
+	cellule *cellule_copie;
 	sequence *sequence_copie;
 	cellule_copie = ptr_cellule;
 	sequence_copie = ptr_sequence;
@@ -81,12 +82,14 @@ void rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule, cellule *cell
 		sequence_copie = sequence_copie -> suite;
 		cellule_copie = cellule_copie -> fils;
 	}
+	return cellule_copie;
 }
 
 
-void rechercher_dico(sequence *ptr_sequence, dico *dictionnaire, cellule *cellule_recherche){
-	cellule_recherche = dictionnaire -> racine;
-	rechercher_fils(ptr_sequence,dictionnaire -> racine, cellule_recherche);
+cellule* rechercher_dico(sequence *ptr_sequence, dico dictionnaire){
+	cellule *cellule_recherche;
+	cellule_recherche = rechercher_fils(ptr_sequence, dictionnaire.racine);
+	return cellule_recherche;
 }
 
 void inserer_tete(sequence *seq_ajout,sequence *ptr_seq) {
@@ -117,7 +120,7 @@ void extraction_tete(sequence *a_extraire, sequence *retour){
 
 void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_MAX, dico *table){
 	cellule *ptr_cell = NULL;
-	rechercher_dico(w, table, ptr_cell);
+	 ptr_cell = rechercher_dico(w, table[0]);
 	ajout_element(a, ptr_cell, INDICE_MAX, TAILLE_LU);
 }
 
