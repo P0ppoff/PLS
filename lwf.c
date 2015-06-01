@@ -24,28 +24,15 @@ char choix(char* champs_option){
 
 void extention(char *original, char *sortie){
 	int i = 0;
-	int change = 0;
-	while(!change && (original[i] != '\0')){
-		if(!change && (original[i] == '.')){
-			sortie[i] = original[i];
-			sortie[i+1] = 'l';
-			sortie[i+2] = 'w';
-			sortie[i+3] = 'f';
-			sortie[i+4] = '\0';
-			change = 1;
-		}
-		if(!change){
-			sortie[i] = original[i];
-		}
+	while(original[i] != '\0'){
+		sortie[i] = original[i];
 		i++;
 	}
-	if(!change){
-		sortie[i]   = '.';
-		sortie[i+1] = 'l';
-		sortie[i+2] = 'w';
-		sortie[i+3] = 'f';
-		sortie[i+4] = '\0';
-	}
+	sortie[i]   = '.';
+	sortie[i+1] = 'l';
+	sortie[i+2] = 'w';
+	sortie[i+3] = 'f';
+	sortie[i+4] = '\0';
 }
 
 void extraire_nom(char *original, char *sortie){
