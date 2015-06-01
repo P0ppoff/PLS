@@ -48,7 +48,7 @@ void inserer_tampon(sequence *seq, tampon *t, int nb, int *nb_bits_remplis){ // 
         courante -> elt |= (masque >> nb_lus); // mise en place des bits
         *nb_bits_remplis += nb_lus;
         if(nb_lus != nb){ // Nous avons rempli le dernier élément sans lire tous les bits voulus
-            courante -> suite = creer_sequence(); // On doit créer une nouvelle case
+            creer_sequence(courante -> suite); // On doit créer une nouvelle case
             masque <<= index_last_full; //on efface les bits déja lus du masque et on place les autres en poid fort
             courante -> elt = masque; // On ajoute les derniers bits à lire dans les poids forts de ntre nouvelle case
             nb_lus = sizeof(element) - index_last_full;
@@ -58,7 +58,7 @@ void inserer_tampon(sequence *seq, tampon *t, int nb, int *nb_bits_remplis){ // 
 }
 
 void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence *seq){
-    seq = creer_sequence();
+    creer_sequence(seq);
     int nb_bits_remplis = 0;
     int n = nb_bits_a_lire; // creation d'un entier qu'on modifieras (est utils car on ne veux pas modifier nb_bits qui n'est qu'une valeur d'entrée )
     while (n != 0){ // ON regarde si on a encore des bits a lire.
@@ -117,7 +117,7 @@ void ecriture_fin(FILE *fichier, int TAILLE_ECRIT, tampon *t){
     code = t -> buffer; // on récupère le buffer sur un grand nombre
     code <<= TAILLE_ECRIT - (t -> nb_bits_restants); // on décale pour faire de la place au code de fin
     code |= FIN;
-    nb_bits = TAILLE_ECRIT + 8 - (t -> nb_bits_restants)
+    nb_bits = TAILLE_ECRIT + 8 - (t -> nb_bits_restants);
     while(nb_bits > 0){ // tant qu'il reste des bits à écrire
         if(nb_bits >= 8){ // on peut encore écrire un octet plein
             decalage = nb_bits % 8; // on enlève les derniers bits non multiples de 8
