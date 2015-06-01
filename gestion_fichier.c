@@ -26,57 +26,92 @@ void fermeture(FILE *fichier){
 	fclose(fichier);
 }
 
-void inserer_tampon(sequence *seq, tampon *t, int nb, int *nb_bits_remplis){ // nb = nombre de bits à mettre dans la séquence qui sont dans le tampon
-    sequence *courante;
-    int indice_liste;
-    int index_last_full;
-    int i;
-    int nb_lus;
-    element masque;
+void inserer_tampon(sequence *seq, tampon *t, int nb_bits_restants, int nb_de_bits_a_remplir){ // nb = nombre de bits à mettre dans la séquence qui sont dans le tampon
+    element masque = ~0;
+    int taille = 8*sizeof(element); // Car sizeof donne la taille en OCTET.... 
+    masque >>= (taille - (t -> nb_bits_dispo)); // si j'ai si bits disponible par exemple je veux 0011 1111.
+    masque >>= ((t -> nb_bits_dispo) - nb_de_bits_a_remplir); // apres cette opération on a par exemple 00000111 pour nb_de_bits_a_remplir = 3
+    //                                                                                                  00000001 pour nb_de_bits_a_remplir = 1
+    //                                                                                                  00111111 pour nb_de_bits_a_remplir = 6
+    //On note que (0 < nb_de_bits_a_remplir <= nb_bits_dispo) dans tout les appel de inserer_tampon (QUEL HASARD !!!!)
 
-    indice_liste = *nb_bits_remplis / sizeof(element); // Permet de savoir de combien d'élément est la liste donnée en argument
-    index_last_full = *nb_bits_remplis % sizeof(element); // On récupère l'indice du dernier bit valide dans le dernier élément de la liste
-    courante = seq; // On récupère la première case
-    for(i=0; i<indice_liste; i++){
-        courante = courante -> suite; // on avance dans la liste pour trouver la dernière case occupée
+    masque <<= ((t -> nb_bits_dispo) - nb_de_bits_a_remplir); // apres cette opération on a par exemple 00111000 pour nb_de_bits_a_remplir = 3
+    //                                                                                                  00100000 pour nb_de_bits_a_remplir = 1
+    //                                                                                                  00111111 pour nb_de_bits_a_remplir = 6
+
+    masque &= (t -> buffer);                                  // apres cette opération on a par exemple 00XXX000 pour nb_de_bits_a_remplir = 3
+    //                                                                                                  00X00000 pour nb_de_bits_a_remplir = 1
+    //                                                                                                  00XXXXXX pour nb_de_bits_a_remplir = 6
+    // A priori maintenant on veut savoir ou coller cette merde dans la sequence. on utilise nb_bits_restants pour ça. (ingénieux!)
+    if (nb_bits_restants <= (t -> nb_bits_dispo)){
+
+        masque >>= ((t -> nb_bits_dispo) - nb_bits_restants);
     }
-    if(nb != 0){ // Savoir s'il reste des trucs à lire dans le tampon
-        masque = 0;
-        masque = ~masque;
-        masque >>= t -> nb_bits_restants; // On décale vers la droite pour avoir les 1 sur les bits de points faibles
-        masque &= t -> buffer; // on récupère ici les bits non utilisés dans le buffer
-        masque >>= t -> nb_bits_restants - nb; // On continue de décaler pour avoir seulement les bits souhaités
-        nb_lus = index_last_full - nb; // Calcul du nombre de bits que 'on va pouvoir placer dans le dernier élément de la liste
-        courante -> elt |= (masque >> nb_lus); // mise en place des bits
-        *nb_bits_remplis += nb_lus;
-        if(nb_lus != nb){ // Nous avons rempli le dernier élément sans lire tous les bits voulus
-            courante -> suite = creer_sequence(); // On doit créer une nouvelle case
-            masque <<= index_last_full; //on efface les bits déja lus du masque et on place les autres en poid fort
-            courante -> elt = masque; // On ajoute les derniers bits à lire dans les poids forts de ntre nouvelle case
-            nb_lus = sizeof(element) - index_last_full;
-            *nb_bits_remplis += nb_lus;
-        }
+    else {
+
+        masque <<= (nb_bits_restants - (t -> nb_bits_dispo));
     }
+
+    (seq -> elt) |= masque;
 }
 
 void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence *seq){
-    seq = creer_sequence();
-    int nb_bits_remplis = 0;
-    int n = nb_bits_a_lire; // creation d'un entier qu'on modifieras (est utils car on ne veux pas modifier nb_bits qui n'est qu'une valeur d'entrée )
-    while (n != 0){ // ON regarde si on a encore des bits a lire.
-        if ((t -> nb_bits_restants) != 0){ // On regarde si le tampon est vide.
-            if (n >= (t -> nb_bits_restants)){ // On regarde si il faut inserer tout les bits du tampon ou simplement une partie.
-                n = n - (t -> nb_bits_restants); // Maj du nombre de bits lire restant car on vide le tampon dans se cas.
-                inserer_tampon (seq, t, (t -> nb_bits_restants), &nb_bits_remplis); // fonction qui insere nb_bits_restants bits de poid faible du buffer dans la sequence.
-            }else{ // Cas ou il y a plus de bits lisible dans le tampon que de bit a lire.
-                inserer_tampon (seq, t, n, &nb_bits_remplis);
-                (t -> nb_bits_restants) = (t -> nb_bits_restants) - n; //maj du nombre de bit encore non lu dans le tampon pour la prochaine utilisation de la fonction car ici
-                n = 0; // Comme il y avais plus de bit lisible que de bit a lire et qu'on les a inseré il faut mettre le nombre de bit a lire a 0 car le traitement est fini.
+    //nb_bits_restants correspond au nombre de bit dans la séquence courante qui n'ont pas été modifié ainsi nb_bits_restant doit etre compris entre 0 et 8 
+    //si nb_bits_restants = 0 alors la séquence est PLEINE et si nb_bits_restants = 8 la séquence est VIDE.
+    //Comme on rempli les poid fort en premier, les bits non valide et qu'il faut modifier lorsque (nb_bits_restant != 0) sont les nb_bits_restants bits de poid faible (logique)
+
+    //nb_bits_a_lire correspond au nombre de bits qu'il reste à lire en tout (logique)
+    //nb_bits_dispo correspond aux nombre de bits de poids faible du buffer qui n'on pas encore été utilisé et qui son donc disponible (logique)
+    sequence *courante = seq;
+    int nb_bits_restants = 0;
+    while (nb_bits_a_lire != 0){ // ON regarde si on a encore des bits a lire.
+        if ((t -> nb_bits_dispo) != 0){ // On regarde si le tampon est vide.
+
+            if ((t -> nb_bits_dispo) <= nb_bits_restants){ // On regarde si il faut inserer tout les bits du tampon ou simplement une partie.
+
+                if((t -> nb_bits_dispo) <= nb_bits_a_lire){ // Cas ou l'on doit videz les dernier bits disponible du buffer car on doit en lire plus qu'il n'y en a et que l'on peux en lire plus qu'il n'y en a sans avoir a chainé une sequence supplémentaire
+
+                    inserer_tampon(courante, t, nb_bits_restants, (t -> nb_bits_dispo)); // insere les nb_bits_dispo bits du buffer t dans la sequence seq sachant qu'il reste nb_bits_restant bit a compléter dans seq
+                    nb_bits_a_lire = nb_bits_a_lire - (t -> nb_bits_dispo); // on met a jour le nombre total de bit a lire puisque logiquement on vien d'en lire nb_bits-dispo.
+                    nb_bits_restants = nb_bits_restants - (t -> nb_bits_dispo); // On met le nombre de bits restant à jour.
+                    //On peut noter que dans le cas dans lequel on se trouve nb_bits_a_lire et nb_bits_restant reste positif car nb_bits_dispo est inferieur à ces deux valeurs.
+                    (t -> nb_bits_dispo) = 0; // Enfin on met le nombre de bits disponible du buffer a 0 (logique car on vient de le vider)
+                }
+                else { //Ici on est dans le cas ou (nb_bits_a_lire < nb_bits_dispo <= nb_bits_restant)
+
+                    inserer_tampon(courante, t, nb_bits_restants, nb_bits_a_lire); //Car nb_bits_a_lire est le plus petit.
+                    nb_bits_restants = nb_bits_restants - nb_bits_a_lire;
+                    (t -> nb_bits_dispo) = (t -> nb_bits_dispo) - nb_bits_a_lire;
+                    //On peut encore noter que les resultat sont positif
+                    nb_bits_a_lire = 0; // Enfin on met le nombre de bits a lire a 0 car on a lu tout ce qu'on voulais.
+                }
+            }
+            else { // Cas ou il y a plus de bits dispo dans le tampon que de bit a modifier dans une unique sequence.
+
+                if(nb_bits_a_lire <= nb_bits_restants){ //Cas ou nb_bits_a_lire <= nb_bits_restants < nb_bits_dispo
+
+                    inserer_tampon(courante, t, nb_bits_restants, nb_bits_a_lire); //Car nb_bits_a_lire est le plus petit.
+                    nb_bits_restants = nb_bits_restants - nb_bits_a_lire;
+                    (t -> nb_bits_dispo) = (t -> nb_bits_dispo) - nb_bits_a_lire;
+                    //On peut encore noter que les resultat sont positif
+                    nb_bits_a_lire = 0; // Enfin on met le nombre de bits a lire a 0 car on a lu tout ce qu'on voulais.   
+
+
+                } 
+                else { // Dans ce cas nb_bits_restants est le plus petit donc il faut finir de le remplir et crerer une autre case pour la sequence.
+
+                    inserer_tampon(courante, t, nb_bits_restants, nb_bits_restants);
+                    nb_bits_a_lire = nb_bits_a_lire - nb_bits_restants;
+                    (t -> nb_bits_dispo) = (t -> nb_bits_dispo) - nb_bits_restants;
+                    (courante -> suite) = creer_sequence(); // On doit créer une nouvelle case car on viens de remplir l'ancienne.
+                    courante = (courante -> suite); // Ensuite on fait pointer le pointeur courant vers cette nouvelle case afin de faire les prochaine modification sur cette nouvelle case
+                    nb_bits_restants = 8; // On vien de créer une nouvelle case donc elle est vide, Ainsi on let nb_bits_restants a 8.
+                }
             }
         }
-        else{
+        else {
             (t -> buffer) = fgetc(fichier);
-            (t -> nb_bits_restants) = 8;
+            (t -> nb_bits_dispo) = 8;
         }
     }
 }
@@ -93,19 +128,19 @@ int est_fin_fichier(sequence *ptr_seq){
 void ecrire(tampon *t, FILE *f){ // écriture du tampon puis mise à jour
     fputc(t->buffer, f);
     t->buffer = 0;
-    t->nb_bits_restants = sizeof(element);
+    t->nb_bits_dispo = sizeof(element);
 }
 
 void ecriture_indice(cellule *cell_w, FILE *f_out, int TAILLE_ECRIT, tampon *t){
-    if(TAILLE_ECRIT <= t->nb_bits_restants){
-        t->buffer |= ((element)(cell_w->index)) << (t->nb_bits_restants - TAILLE_ECRIT);
-        t->nb_bits_restants -= TAILLE_ECRIT;
-        if(t->nb_bits_restants == 0){ // le tampon est plein on doit l'écrire pour faire de la place
+    if(TAILLE_ECRIT <= t->nb_bits_dispo){
+        t->buffer |= ((element)(cell_w->index)) << (t->nb_bits_dispo - TAILLE_ECRIT);
+        t->nb_bits_dispo -= TAILLE_ECRIT;
+        if(t->nb_bits_dispo == 0){ // le tampon est plein on doit l'écrire pour faire de la place
             ecrire(t, f_out);
         }
     }else{
-        t->buffer |= (element) ((cell_w->index) >> (TAILLE_ECRIT - t->nb_bits_restants));
-        TAILLE_ECRIT -= t->nb_bits_restants; // Mise à jour du nombre de bits qu'il reste à écrire
+        t->buffer |= (element) ((cell_w->index) >> (TAILLE_ECRIT - t->nb_bits_dispo));
+        TAILLE_ECRIT -= t->nb_bits_dispo; // Mise à jour du nombre de bits qu'il reste à écrire
         ecrire(t, f_out); // écriture du tampon car il est plein
         ecriture_indice(cell_w, f_out, TAILLE_ECRIT, t); // Finalement la TAILLE_ECRIT correspond aussi aunombre de bits qu'il reste à écrire
     }
@@ -117,9 +152,9 @@ void ecriture_fin(FILE *fichier, int TAILLE_ECRIT, tampon *t){
     int decalage;
 
     code = t -> buffer; // on récupère le buffer sur un grand nombre
-    code <<= TAILLE_ECRIT - (t -> nb_bits_restants); // on décale pour faire de la place au code de fin
+    code <<= TAILLE_ECRIT - (t -> nb_bits_dispo); // on décale pour faire de la place au code de fin
     code |= FIN;
-    nb_bits = TAILLE_ECRIT + 8 - (t -> nb_bits_restants);
+    nb_bits = TAILLE_ECRIT + 8 - (t -> nb_bits_dispo);
     while(nb_bits > 0){ // tant qu'il reste des bits à écrire
         if(nb_bits >= 8){ // on peut encore écrire un octet plein
             decalage = nb_bits % 8; // on enlève les derniers bits non multiples de 8
