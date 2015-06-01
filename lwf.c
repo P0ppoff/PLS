@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
 
 	char option = 0; // équivalent à option = '\0'
 
-	char *sortie;
+	char sortie[256];
 
 	FILE *f_in, *f_out;
 
@@ -66,11 +66,7 @@ int main(int argc, char **argv) {
 		if(option == 'c'){
 			printf("\n\tCompression\n\n");
 			extention(argv[2], sortie);
-			f_in = ouverture_lecture(argv[2]);
-			f_out = ouverture_ecriture(sortie);
-			compresser(f_in,f_out);
-			fermeture(f_in);
-			fermeture(f_out);
+			m
 		}else if(option == 'e'){
 			printf("\n\tExtraction\n\n");
 			extraire_nom(argv[2], sortie);

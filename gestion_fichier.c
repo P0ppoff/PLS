@@ -6,7 +6,7 @@ FILE* ouverture_lecture(char nom_fichier[]){
 	FILE* fichier = NULL;
     fichier = fopen(nom_fichier, "rb");
     if (fichier == NULL){
-        printf("Impossible d'ouvrir le fichier");
+        printf("\tImpossible d'ouvrir le fichier\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -15,7 +15,7 @@ FILE* ouverture_ecriture(char nom_fichier[]){
 	FILE* fichier = NULL;
     fichier = fopen(nom_fichier, "wb");
     if (fichier == NULL){
-        printf("Impossible d'ouvrir le fichier");
+        printf("\tImpossible d'ouvrir le fichier\n");
         exit(EXIT_FAILURE);
     }
 }
