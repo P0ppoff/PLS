@@ -37,7 +37,7 @@ void liberer_dico (dico *ptr_dico){
 }
 
 sequence* creer_sequence() {
-    sequence *ptr_seq = malloc(sizeof(sequence));
+    sequence *ptr_seq = (sequence *) malloc(sizeof(sequence));
     if (ptr_seq == NULL) {
         printf("Allocation sequence impossible\n");
         exit(EXIT_FAILURE);
@@ -48,7 +48,7 @@ sequence* creer_sequence() {
 }
 
 cellule* creer_cellule() {
-    cellule *ptr_cellule = malloc(sizeof(cellule));
+    cellule *ptr_cellule = (cellule *) malloc(sizeof(cellule));
     if (ptr_cellule == NULL) {
         printf("Allocation cellule impossible\n");
         exit(EXIT_FAILURE);
