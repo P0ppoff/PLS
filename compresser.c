@@ -10,10 +10,10 @@ void compresser(FILE* f_in, FILE* f_out){
 	sequence *w, *a;
 	tampon bl, be; // Les deux buffers de lecture et écriture
 
-	init_compression(dictionnaire); printf("a\n");
-	lecture_bits(f_in, TAILLE_LU, &bl, w); printf("a\n");
+	init_compression(dictionnaire); 
+	lecture_bits(f_in, TAILLE_LU, &bl, &w); printf("\t%p\n",w);
 	while(!est_fin_fichier(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
-		lecture_bits(f_in, TAILLE_LU, &bl, a);
+		lecture_bits(f_in, TAILLE_LU, &bl, &a);
 		rechercher_dico(w, dictionnaire, cell_w);
 		rechercher_fils(a, cell_w, cell_s); // pramatère : le parent
 		if(cell_s != NULL){ // w.a appartient au dictionnaire
