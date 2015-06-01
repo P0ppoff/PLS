@@ -66,7 +66,11 @@ int main(int argc, char **argv) {
 		if(option == 'c'){
 			printf("\n\tCompression\n\n");
 			extention(argv[2], sortie);
-			m
+			f_in = ouverture_lecture(argv[2]);
+			f_out = ouverture_ecriture(sortie);
+			compresser(f_in,f_out);
+			fermeture(f_in);
+			fermeture(f_out);
 		}else if(option == 'e'){
 			printf("\n\tExtraction\n\n");
 			extraire_nom(argv[2], sortie);
