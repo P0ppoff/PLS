@@ -26,7 +26,7 @@ typedef struct _dico {
 
 typedef struct _tampon {
 	element buffer;
-	int nb_bits_restants;
+	int nb_bits_dispo;
 } tampon;
 
 #endif //_TYPES_H_
