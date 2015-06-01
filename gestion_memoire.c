@@ -36,19 +36,18 @@ void liberer_dico (dico *ptr_dico){
     ptr_dico = NULL;
 }
 
-sequence* creer_sequence() {
-    sequence* ptr_seq = malloc(sizeof(sequence));
+void creer_sequence(sequence* ptr_seq) {
+    ptr_seq = malloc(sizeof(sequence));
     if (ptr_seq == NULL) {
         printf("Allocation sequence impossible\n");
         exit(EXIT_FAILURE);
     }
     ptr_seq->suite = NULL;
     ptr_seq->elt = 0;
-    return ptr_seq;
 }
 
-cellule* creer_cellule() {
-    cellule* ptr_cellule = malloc(sizeof(cellule));
+void creer_cellule(cellule* ptr_cellule) {
+    ptr_cellule = malloc(sizeof(cellule));
     if (ptr_cellule == NULL) {
         printf("Allocation cellule impossible\n");
         exit(EXIT_FAILURE);
@@ -59,7 +58,6 @@ cellule* creer_cellule() {
     ptr_cellule->fils = NULL;
     ptr_cellule->elt = 0;
     ptr_cellule->index = 0;
-    return ptr_cellule;
 }
 
 void modif_lg_table (dico *table){

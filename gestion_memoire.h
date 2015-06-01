@@ -10,9 +10,9 @@ void liberer_sequence (sequence *ptr_seq);
 
 void liberer_dico (dico *ptr_dico);
 
-sequence* creer_sequence();
+void creer_sequence(sequence* ptr_seq);
 
-cellule* creer_cellule();
+void creer_cellule(cellule* ptr_cellule);
 
 void modif_lg_table (dico table[]);
 

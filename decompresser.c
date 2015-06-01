@@ -19,7 +19,7 @@ void decompresser(FILE* f_in, FILE* f_out){
 	while(!est_fin_fichier(w)){ // vérification w  = dernier élément à tous les bits à 1 = 255
 		lecture_bits(f_in, TAILLE_LU, iprime);
 		indice = conversion(iprime); // conversion d'une séquence en l'entier correspondant
-		if(table[indice] == NULL){
+		if(table[indice].racine == NULL){
 			recupere_seq(table, i, wprime);
 			ajout_queue(wprime, a);
 		}else{
