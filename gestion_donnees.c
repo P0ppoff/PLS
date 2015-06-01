@@ -5,13 +5,13 @@ void init_compression (dico *dictionnaire){ // initialisation du dictionnaire po
 	int i;
 	cellule *cellule_precedente = NULL;
 	cellule *cellule_courante;
-	creer_cellule(dictionnaire->racine); //creation de la première cellule
+	dictionnaire->racine = creer_cellule(); //creation de la première cellule
 	cellule_courante = dictionnaire->racine;
 	for (i = 0; i < 256; i++){ //On remplit 256 cellules
-		cellule_courante -> index = i; //misa a jour de l'index
+		cellule_courante -> index = i; //mise a jour de l'index
 		cellule_courante -> elt = i; // mise a jour du contenu
 		cellule_courante -> frere_precedent = cellule_precedente; //chainage des cellules
-		creer_cellule(cellule_courante -> frere_suivant); //creation de la suite des cellules
+		cellule_courante -> frere_suivant = creer_cellule(); //creation de la suite des cellules
 		cellule_precedente = cellule_courante; // on avance d'une cellule
 		cellule_courante = cellule_courante -> frere_suivant;
 	}
@@ -21,14 +21,14 @@ void init_decompression (dico *table, dico *dictionnaire){ // Initialisation du 
 	int i;
 	cellule *cellule_precedente = NULL;
 	cellule *cellule_courante;
-	creer_cellule(dictionnaire->racine);
+	dictionnaire->racine = creer_cellule();
 	cellule_courante = dictionnaire->racine; 
 	for (i = 0; i < 256; i++){ 
 		cellule_courante -> index = i;
 		cellule_courante -> elt = i;
 		table[i].racine = cellule_courante;
 		cellule_courante -> frere_precedent = cellule_precedente;
-		creer_cellule(cellule_courante -> frere_suivant);
+		cellule_courante -> frere_suivant = creer_cellule();
 		cellule_precedente = cellule_courante;
 		cellule_courante = cellule_courante -> frere_suivant;
 	}
@@ -37,7 +37,7 @@ void init_decompression (dico *table, dico *dictionnaire){ // Initialisation du 
 void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT){
 	cellule *courante;
 	cellule *nouvelle_cell;
-	creer_cellule(nouvelle_cell); //allocation d'une cellule
+	nouvelle_cell = creer_cellule(); //allocation d'une cellule
 	//maj de l'indice
 	(*INDICE_MAX) ++;
 	if (2 ^ (*TAILLE_ECRIT) <= (*INDICE_MAX)){
@@ -103,7 +103,7 @@ void recupere_seq(dico *table, int i, sequence *seq_retour){
 	cellule *courante = table[i].racine;
 	seq_retour = NULL;
 	while(courante != NULL){
-		creer_sequence(nouvelle_seq);
+		nouvelle_seq = creer_sequence();
 		nouvelle_seq -> elt = courante -> elt;
 		inserer_tete(nouvelle_seq,seq_retour);
 		courante = courante -> parent;
@@ -111,7 +111,7 @@ void recupere_seq(dico *table, int i, sequence *seq_retour){
 }
 
 void extraction_tete(sequence *a_extraire, sequence *retour){
-	creer_sequence(retour);
+	retour = creer_sequence();
 	retour -> elt = a_extraire -> elt;
 }
 

@@ -48,7 +48,7 @@ void inserer_tampon(sequence *seq, tampon *t, int nb, int *nb_bits_remplis){ // 
         courante -> elt |= (masque >> nb_lus); // mise en place des bits
         *nb_bits_remplis += nb_lus;
         if(nb_lus != nb){ // Nous avons rempli le dernier élément sans lire tous les bits voulus
-            creer_sequence(courante -> suite); // On doit créer une nouvelle case
+            courante -> suite = creer_sequence(); // On doit créer une nouvelle case
             masque <<= index_last_full; //on efface les bits déja lus du masque et on place les autres en poid fort
             courante -> elt = masque; // On ajoute les derniers bits à lire dans les poids forts de ntre nouvelle case
             nb_lus = sizeof(element) - index_last_full;
@@ -58,7 +58,7 @@ void inserer_tampon(sequence *seq, tampon *t, int nb, int *nb_bits_remplis){ // 
 }
 
 void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence *seq){
-    creer_sequence(seq);
+    seq = creer_sequence();
     int nb_bits_remplis = 0;
     int n = nb_bits_a_lire; // creation d'un entier qu'on modifieras (est utils car on ne veux pas modifier nb_bits qui n'est qu'une valeur d'entrée )
     while (n != 0){ // ON regarde si on a encore des bits a lire.
