@@ -68,8 +68,7 @@ void ajout_queue(sequence *ptr_tete, sequence *ptr_queue){
 }
 
 
-cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule){
-	cellule *cellule_copie;
+void rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule, cellule *cellule_copie){
 	sequence *sequence_copie;
 	cellule_copie = ptr_cellule;
 	sequence_copie = ptr_sequence;
@@ -84,10 +83,9 @@ cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule){
 }
 
 
-cellule* rechercher_dico(sequence *ptr_sequence, dico *dictionnaire){
-	cellule *cellule_copie;
-	cellule_copie = dictionnaire -> racine;
-	return rechercher_fils(ptr_sequence,cellule_copie);
+void rechercher_dico(sequence *ptr_sequence, dico *dictionnaire, cellule *cellule_recherche){
+	cellule_recherche = dictionnaire -> racine;
+	return rechercher_fils(ptr_sequence,cellule_recherche, cellule_copie);
 }
 
 void inserer_tete(sequence *seq_ajout,sequence *ptr_seq) {

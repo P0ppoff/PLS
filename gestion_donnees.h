@@ -14,9 +14,9 @@ void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT)
 
 void ajout_queue(sequence *ptr_tete, sequence *ptr_queue);
 
-cellule* rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule);
+void rechercher_fils(sequence *ptr_sequence, cellule *ptr_cellule, cellule *cellule_copie);
 
-cellule* rechercher_dico(sequence *ptr_sequence, dico *dictionnaire);
+void rechercher_dico(sequence *ptr_sequence, dico *dictionnaire, cellule *cellule_recherche);
 
 void extraction_tete(sequence *a_extraire, sequence *retour);
 
