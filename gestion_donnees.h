@@ -6,7 +6,7 @@
 
 void init_compression (dico *dictionnaire);
 
-void init_decompression (dico table[], dico *dictionnaire);
+void init_decompression (dico *table, dico *dictionnaire);
 
 void recupere_seq(dico *table, int i, sequence *seq_retour);
 
