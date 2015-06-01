@@ -130,3 +130,13 @@ void ecriture_fin(FILE *fichier, int TAILLE_ECRIT, tampon *t){
         nb_bits -= 8; // on vient d'écrire un octet alors on enlève 8 au nombre de bits à écrire
     }
 }
+
+void ecriture_seq(FILE *fichier, sequence *seq){ // permet d'écrire la liste d'éléments dans le fichier suivante la taille d'écriture courante
+    sequence *courante;
+
+    courante = seq;
+    while(courante != NULL){
+        fputc(courante -> elt, fichier);
+        courante = courante -> suite;
+    }
+}

@@ -20,5 +20,6 @@ void ecriture_indice(cellule *cell_w, FILE *f_out, int TAILLE_ECRIT, tampon *t);
 
 void ecriture_fin(FILE *fichier, int TAILLE_ECRIT, tampon *t);
 
+void ecriture_seq(FILE *fichier, sequence *seq); 
 
 #endif // _GESTION_FICHIER_H_
