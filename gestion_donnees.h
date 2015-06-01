@@ -22,4 +22,6 @@ void extraction_tete(sequence *a_extraire, sequence *retour);
 
 void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_MAX, dico *table);
 
+int conversion (sequence *seq, int TAILLE_LU);
+
 #endif // _GESTION_DONNEES_H_

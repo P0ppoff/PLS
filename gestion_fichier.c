@@ -9,6 +9,7 @@ FILE* ouverture_lecture(char nom_fichier[]){
         printf("\tImpossible d'ouvrir le fichier\n");
         exit(EXIT_FAILURE);
     }
+    return fichier;
 }
 
 FILE* ouverture_ecriture(char nom_fichier[]){
@@ -18,13 +19,14 @@ FILE* ouverture_ecriture(char nom_fichier[]){
         printf("\tImpossible d'ouvrir le fichier\n");
         exit(EXIT_FAILURE);
     }
+    return fichier;
 }
 
 void fermeture(FILE *fichier){
 	fclose(fichier);
 }
 
-void inserer_tampon(sequence **seq, tampon *t, int nb, int *nb_bits_remplis){ // nb = nombre de bits à mettre dans la séquence qui sont dans le tampon
+void inserer_tampon(sequence *seq, tampon *t, int nb, int *nb_bits_remplis){ // nb = nombre de bits à mettre dans la séquence qui sont dans le tampon
     sequence *courante;
     int indice_liste;
     int index_last_full;
@@ -34,7 +36,7 @@ void inserer_tampon(sequence **seq, tampon *t, int nb, int *nb_bits_remplis){ //
 
     indice_liste = *nb_bits_remplis / sizeof(element); // Permet de savoir de combien d'élément est la liste donnée en argument
     index_last_full = *nb_bits_remplis % sizeof(element); // On récupère l'indice du dernier bit valide dans le dernier élément de la liste
-    courante = *seq; // On récupère la première case
+    courante = seq; // On récupère la première case
     for(i=0; i<indice_liste; i++){
         courante = courante -> suite; // on avance dans la liste pour trouver la dernière case occupée
     }
@@ -57,8 +59,8 @@ void inserer_tampon(sequence **seq, tampon *t, int nb, int *nb_bits_remplis){ //
     }
 }
 
-void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence **seq){
-    *seq = creer_sequence(); 
+void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence *seq){
+    seq = creer_sequence();
     int nb_bits_remplis = 0;
     int n = nb_bits_a_lire; // creation d'un entier qu'on modifieras (est utils car on ne veux pas modifier nb_bits qui n'est qu'une valeur d'entrée )
     while (n != 0){ // ON regarde si on a encore des bits a lire.

@@ -40,7 +40,7 @@ void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT)
 	nouvelle_cell = creer_cellule(); //allocation d'une cellule
 	//maj de l'indice
 	(*INDICE_MAX) ++;
-	if (2 ^ (*TAILLE_ECRIT) <= (*INDICE_MAX)){
+	if ((2 ^ (*TAILLE_ECRIT)) <= (*INDICE_MAX)){
 		(*TAILLE_ECRIT) ++;
 	}
 	//fin maj de l'indice
@@ -99,7 +99,7 @@ void inserer_tete(sequence *seq_ajout,sequence *ptr_seq) {
 }
 
 void recupere_seq(dico *table, int i, sequence *seq_retour){
-	sequence *nouvelle_seq;
+	sequence *nouvelle_seq = NULL;
 	cellule *courante = table[i].racine;
 	seq_retour = NULL;
 	while(courante != NULL){
@@ -111,19 +111,19 @@ void recupere_seq(dico *table, int i, sequence *seq_retour){
 }
 
 void extraction_tete(sequence *a_extraire, sequence *retour){
-	retour = creer_sequence();
+	creer_sequence(retour);
 	retour -> elt = a_extraire -> elt;
 }
 
 void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_MAX, dico *table){
-	cellule *ptr_cell;
+	cellule *ptr_cell = NULL;
 	rechercher_dico(w, table, ptr_cell);
 	ajout_element(a, ptr_cell, INDICE_MAX, TAILLE_LU);
 }
 
 
-int conversion ( sequence *seq, int TAILLE_LU){
-	int i,somme = 0;
+int conversion (sequence *seq, int TAILLE_LU){
+	int somme = 0;
 	sequence *copie = seq;
 	while (copie  != NULL){
 		somme <<= sizeof(element);

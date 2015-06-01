@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "gestion_memoire.h"
 #include "types.h"
 
 FILE* ouverture_lecture(char nom_fichier[]);
@@ -12,7 +13,7 @@ FILE* ouverture_ecriture(char nom_fichier[]);
 
 void fermeture(FILE *fichier);
 
-void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence **seq);
+void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence *seq);
 
 int est_fin_fichier(sequence *ptr_seq);
 
