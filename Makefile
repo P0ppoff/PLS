@@ -3,7 +3,7 @@
 #-------------------------------------------------
 CC=gcc
 #CFLAGS=-g -Wall -pedantic -I../include -DDEBUG -DINT16
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall -lm
 LDFLAGS=
 LIBRARIES=
 
