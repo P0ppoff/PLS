@@ -62,6 +62,16 @@ cellule* creer_cellule() {
     return ptr_cellule;
 }
 
+dico* creer_table(){
+    dico *ptr_dico = (dico *) malloc(sizeof(dico));
+    if (ptr_dico == NULL) {
+        printf("Allocation cellule impossible\n");
+        exit(EXIT_FAILURE);
+    }
+    ptr_dico -> racine = NULL;
+    return ptr_dico;
+}
+
 void modif_lg_table (dico *table){
     table = (dico*) realloc(table,2*sizeof(table));
 }

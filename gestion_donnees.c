@@ -44,7 +44,8 @@ void init_decompression (dico *table, dico *dictionnaire){ // Initialisation du 
 void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT){
 	cellule *courante;
 	cellule *nouvelle_cell;
-	nouvelle_cell = creer_cellule(); //allocation d'une cellule
+	nouvelle_cell = creer_cellule();
+	courante = creer_cellule(); //allocation d'une cellule
 	//maj de l'indice
 	(*INDICE_MAX) ++;
 	if ((2 ^ (*TAILLE_ECRIT)) <= (*INDICE_MAX)){
@@ -83,8 +84,10 @@ void ajout_queue(sequence *ptr_tete, sequence *ajout){
 
 //on recherche la sequence dans les freres de la cellule
 cellule* rechercher_dans_fils(sequence *ptr_sequence, cellule *ptr_cellule){
-	cellule *cellule_courante;
-	sequence *sequence_courante = ptr_sequence;
+	cellule *cellule_courante = creer_cellule();
+	cellule_courante = ptr_cellule;
+	sequence *sequence_courante = creer_sequence();
+	sequence_courante = ptr_sequence;
 	if (ptr_cellule != NULL) {
 		cellule_courante = ptr_cellule -> fils;
 		do {
@@ -95,36 +98,34 @@ cellule* rechercher_dans_fils(sequence *ptr_sequence, cellule *ptr_cellule){
 				sequence_courante = sequence_courante -> suite;
 				cellule_courante = cellule_courante -> fils;
 			}		
-		} while (cellule_courante != NULL);
+		} while ((cellule_courante != NULL)||(sequence_courante != NULL));
 	}
 	return cellule_courante;
 }
 
 //on recherche la sequence dans les freres de la cellule
 cellule* rechercher_dans_freres(sequence *ptr_sequence, cellule *ptr_cellule){
-	cellule *cellule_courante = ptr_cellule;
-	sequence *sequence_courante = ptr_sequence;
-	printf("\t%p\n",cellule_courante);
+	cellule *cellule_courante = creer_cellule();
+	cellule_courante = ptr_cellule;
+	sequence *sequence_courante = creer_sequence();
+	sequence_courante = ptr_sequence;
 	if (ptr_cellule != NULL) {
 		do {
-			while (cellule_courante != NULL && cellule_courante -> elt != sequence_courante -> elt){
+			while ((cellule_courante != NULL) && ((cellule_courante -> elt) != (sequence_courante -> elt))){
 				cellule_courante = cellule_courante -> frere_suivant;
-				printf("\t%p\n",cellule_courante);
 			}
 			if (cellule_courante != NULL) {
 				sequence_courante = sequence_courante -> suite;
 				cellule_courante = cellule_courante -> fils;
-				printf("\t%p\n",cellule_courante);
 			}		
-		} while (cellule_courante != NULL);
+		} while ((cellule_courante != NULL)||(sequence_courante != NULL));
 	}
-	printf("\t%p\n",cellule_courante);
 	return cellule_courante;
 }
 
 
 cellule* rechercher_dico(sequence *ptr_sequence, dico dictionnaire){
-	cellule *cellule_recherche;
+	cellule *cellule_recherche = creer_cellule();
 	cellule_recherche = rechercher_dans_freres(ptr_sequence, dictionnaire.racine);
 	return cellule_recherche;
 }
@@ -151,13 +152,14 @@ void recupere_seq(dico *table, int i, sequence *seq_retour){
 }
 
 void extraction_tete(sequence *a_extraire, sequence *retour){
-	creer_sequence(retour);
+	liberer_sequence(retour);
+	retour = creer_sequence();
 	retour -> elt = a_extraire -> elt;
 }
 
 void ajout_element_concat(sequence *w, sequence *a, int *TAILLE_LU, int *INDICE_MAX, dico *table){
-	cellule *ptr_cell = NULL;
-	 ptr_cell = rechercher_dico(w, table[0]);
+	cellule *ptr_cell = creer_cellule();
+	ptr_cell = rechercher_dico(w, table[0]);
 	ajout_element(a, ptr_cell, INDICE_MAX, TAILLE_LU);
 }
 

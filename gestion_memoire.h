@@ -14,6 +14,8 @@ sequence* creer_sequence();
 
 cellule* creer_cellule();
 
+dico* creer_table();
+
 void modif_lg_table (dico table[]);
 
 #endif // _GESTION_MEMOIRE_H_
