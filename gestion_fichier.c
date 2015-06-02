@@ -99,8 +99,8 @@ void lecture_bits(FILE *fichier, int nb_bits_a_lire, tampon *t, sequence *seq){
     }
 }
 
-int est_fin_fichier(sequence *ptr_seq){
-	return (ptr_seq->elt == EOF);
+int est_fin_fichier(FILE *fichier){
+	return feof(fichier);
 }
 
 void ecrire(tampon *t, FILE *f){ // écriture du tampon puis mise à jour
