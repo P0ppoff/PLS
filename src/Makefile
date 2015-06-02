@@ -2,7 +2,7 @@
 #                    VARIABLES
 #-------------------------------------------------
 CC=gcc
-CFLAGS=-g -Wall -lm -Iinclude
+CFLAGS=-g -Wall -lm -I../include
 LDFLAGS=
 LIBRARIES=
 
@@ -18,13 +18,13 @@ all: $(EXEC)
 $(EXEC): $(OBJS)
 	$(CC) $^ $(CFLAGS) -o $@ 
 
-lwf.o: lwf.c include/compresser.h include/decompresser.h include/gestion_fichier.h
-compresser.o: compresser.c include/compresser.h include/gestion_donnees.h include/gestion_fichier.h
-decompresser.o: decompresser.c include/decompresser.h include/gestion_donnees.h include/gestion_fichier.h
-gestion_donnees.o: gestion_donnees.c include/gestion_donnees.h include/gestion_memoire.h
-gestion_fichier.o: gestion_fichier.c include/gestion_fichier.h include/gestion_memoire.h
+lwf.o: lwf.c ../include/compresser.h ../include/decompresser.h ../include/gestion_fichier.h
+compresser.o: compresser.c ../include/compresser.h ../include/gestion_donnees.h ../include/gestion_fichier.h
+decompresser.o: decompresser.c ../include/decompresser.h ../include/gestion_donnees.h ../include/gestion_fichier.h
+gestion_donnees.o: gestion_donnees.c ../include/gestion_donnees.h ../include/gestion_memoire.h
+gestion_fichier.o: gestion_fichier.c ../include/gestion_fichier.h ../include/gestion_memoire.h
 
-%.o: %.c include/%.h types.h
+%.o: %.c ../include/%.h types.h
 
 #-------------------------------------------------
 #                     CLEANING
