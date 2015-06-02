@@ -1,7 +1,7 @@
 #include "decompresser.h"
 
 
-void init_tampon_lecturee(tampon *t){
+void init_tampon(tampon *t){
 	t -> nb_bits_dispo = 0;
 	t -> buffer = 0;
 }
