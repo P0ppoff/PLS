@@ -1,7 +1,12 @@
 #include "compresser.h"
 
-void init_tampon(tampon *t){
+void init_tampon_lecture(tampon *t){
 	t -> nb_bits_dispo = 0;
+	t -> buffer = 0;
+}
+
+void init_tampon_ecriture(tampon *t){
+	t -> nb_bits_dispo = 8;
 	t -> buffer = 0;
 }
 
@@ -28,7 +33,8 @@ void compresser(FILE* f_in, FILE* f_out){
 	tampon bl, be; // Les deux buffers de lecture et écriture
 
 	init_compression(&dictionnaire);
-	init_tampon(&bl);
+	init_tampon_lecture(&bl);
+	init_tampon_ecriture(&be);
 	w = creer_sequence();
 	lecture_bits(f_in, TAILLE_LU, &bl, w);
 	afficher_sequence(w);
@@ -42,6 +48,7 @@ void compresser(FILE* f_in, FILE* f_out){
 		if(cell_s != NULL){ // w.a appartient au dictionnaire
 			ajout_queue(w,a); // création de la sequence à rechercher
 		}else{
+			printf("\tTAILLE_ECRIT = %i\n", TAILLE_ECRIT);
 			ecriture_indice(cell_w, f_out, TAILLE_ECRIT, &be);
 			ajout_element(a, cell_w, &INDICE_MAX, &TAILLE_ECRIT); // on met a jour avant donc on envoie INDICE_MAX en tant que int (on le modifie pas dans cette fonction)
 			w -> elt = a -> elt;

@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "gestion_memoire.h"
+#include <math.h>
 
 void init_compression (dico *dictionnaire);
 

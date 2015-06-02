@@ -48,7 +48,7 @@ void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT)
 	courante = creer_cellule(); //allocation d'une cellule
 	//maj de l'indice
 	(*INDICE_MAX) ++;
-	if ((2 ^ (*TAILLE_ECRIT)) <= (*INDICE_MAX)){
+	if (pow(2, (*TAILLE_ECRIT)) <= (*INDICE_MAX)){
 		(*TAILLE_ECRIT) ++;
 	}
 	//fin maj de l'indice
