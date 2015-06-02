@@ -1,11 +1,6 @@
 #include "decompresser.h"
 
 
-void init_tampon(tampon *t){
-	t -> nb_bits_dispo = 0;
-	t -> buffer = 0;
-}
-
 void decompresser(FILE* f_in, FILE* f_out){
 	int TAILLE_LU = 9; // on commence sur 9 pour avoir deux infos de plus : Fin de fichier & incrémentation du nombre de bits à écrire
 	int INDICE_MAX = 257; // dernier indice donné
@@ -27,7 +22,7 @@ void decompresser(FILE* f_in, FILE* f_out){
 	w = creer_sequence();
 	iprime = creer_sequence();
 	wprime = creer_sequence();
-	init_tampon_lecturee(&bl);
+	init_tampon_lecture(&bl);
 	lecture_bits(f_in, TAILLE_LU, &bl, i);
 	indice = conversion(i, TAILLE_LU);
 	recupere_seq(table, indice, a); // renvoie la séquence pour aboutir à la case d'index i // antention à la fin de fichier, si table[i]==NULL soit fin de fichier -> a = EOF soit increment

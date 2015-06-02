@@ -41,6 +41,27 @@ void init_decompression (dico *table, dico *dictionnaire){ // Initialisation du 
 	cellule_courante -> frere_precedent = cellule_precedente;
 }
 
+void init_tampon_lecture(tampon *t){
+	t -> nb_bits_dispo = 0;
+	t -> buffer = 0;
+}
+
+void init_tampon_ecriture(tampon *t){
+	t -> nb_bits_dispo = 8;
+	t -> buffer = 0;
+}
+
+void afficher_sequence (sequence * seq){
+	sequence * courante = seq;
+	printf("le pointeur de cette séquence est %p\n", seq);
+	printf("l'élément de la séquence vaut %x ", courante -> elt);
+	while (courante -> suite != NULL){
+		courante = courante -> suite;
+		printf("%x ", courante -> elt);
+	}
+	printf("\n");
+}
+
 void ajout_element (sequence *a, cellule *w, int *INDICE_MAX, int *TAILLE_ECRIT){
 	cellule *courante;
 	cellule *nouvelle_cell;
